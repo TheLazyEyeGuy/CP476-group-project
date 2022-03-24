@@ -1,0 +1,124 @@
+<html>
+    <body onload="loadDoc()">
+    </body>
+
+    <script>
+        // Convert string to 2D array of coins, price, favStocks
+        function processString(str) {
+            const temp =  str.split(":");
+
+            const coins = temp[0].split(",");
+            const price = temp[1].split(",");
+            const favStocks = temp[2].split(",");
+
+            const processed = [coins, price, favStocks];
+            return processed;
+        }
+
+        // Submit form data with AJAX
+        // Form data: list of favourite coin indexes
+        function submitData(buttons) {
+            var formData = new FormData();
+            const favCoins = [];
+            
+            for (i = 0; i < buttons.length; i++) {
+                if (buttons[i].value == "Remove") {
+                    favCoins.push(i);
+                }
+            }
+            formData.append("favCoins", favCoins);
+
+            var response = new XMLHttpRequest;
+            response.open("POST", "/handle_coins.php", true);
+            response.send(formData);
+        }
+
+        // Switches button text and hidden value on click (between Add/Remove)
+        function toggleButton(i) {
+            var button = document.getElementById("coin" + i);
+
+            if (button.value == "Add") {
+                button.innerHTML = "Remove";
+                button.value = "Remove";
+            }
+            else {
+                button.innerHTML = "Add";
+                button.value = "Add";
+            }
+        }
+
+        // Dynamically create HTML form and append to page body
+        // Form contains: a button and label for each coin in database, a submit button
+        function createForm(processed) {
+            const coins = processed[0];
+            const price = processed[1];
+            const favStocks = processed[2];
+
+            // Create form
+            const form = document.createElement("form");
+            form.setAttribute("method", "POST");
+            form.setAttribute("action", "/handle_coins.php");
+
+            // Create linebreak
+            const br = document.createElement("br");
+
+            // Create coin buttons and labels
+            const buttons = [];
+            const buttonLabels = [];
+
+            for (i = 0; i < coins.length; i++) {
+                buttons[i] = document.createElement("button");
+                buttons[i].setAttribute("id", "coin" + i);
+                buttons[i].setAttribute("type", "button");          // Prevent Add/Remove buttons from submitting form
+                
+                // Adjust button style
+                buttons[i].style.width = "65px";
+
+                // Add onclick event listener
+                buttons[i].addEventListener("click", toggleButton.bind(this, i));
+
+                // Set text according to favourited coins
+                if (favStocks.includes(coins[i])) {
+                    buttons[i].innerHTML = "Remove";
+                    buttons[i].value = "Remove";
+                }
+                else {
+                    buttons[i].innerHTML = "Add";
+                    buttons[i].value = "Add";
+                }
+
+                buttonLabels[i] = document.createElement("label");
+                buttonLabels[i].innerHTML = coins[i];
+
+                form.appendChild(buttons[i]);
+                form.appendChild(buttonLabels[i]);
+                form.appendChild(br.cloneNode());           // Can't insert multiple of the same breakpoint
+            }
+
+            // Create submit button
+            const submit = document.createElement("button")
+            submit.setAttribute("type", "button");
+            submit.innerHTML = "Submit";
+            submit.addEventListener("click", submitData.bind(this, buttons));
+
+            form.appendChild(submit);
+            document.getElementsByTagName("body")[0].appendChild(form);     // Append form to body
+        }
+
+        // Runs on retreival of string using AJAX
+        // String contains: coins, price, favStock
+        function loadDoc() {
+            // Form AJAX request
+            const request = new XMLHttpRequest();
+
+            // Run function after receiving answer
+            request.onload = function() {
+                processed = processString(this.responseText);
+                createForm(processed);
+            }
+
+            request.open("POST", "get_coins.php", true);
+            request.send();
+        }
+    </script>
+</html>
