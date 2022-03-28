@@ -1,1 +1,1 @@
-# CP476-group-project
+# CP476-group-project Crypto Tracker
