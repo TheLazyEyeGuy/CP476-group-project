@@ -32,6 +32,9 @@ if(isset($_POST['SubmitButton'])) {
         $stmt->execute();
         echo "account created";
         //redirect to main page and login in
+        //TODO make database initiallize cookies upon new user
+        header("Location: http://localhost/start.php");
+        exit();
     } else {
         echo "username and password cannot be empty" . $conn->error;
     }

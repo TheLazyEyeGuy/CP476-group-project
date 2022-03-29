@@ -40,7 +40,10 @@ if(isset($_POST['SubmitButton'])) {
         $stmt2 = $conn->prepare("UPDATE Login_test SET Pass = ? WHERE Username = ?");
         $stmt2->bind_param("ss", $newpass, $name);
         $stmt2->execute();
-        //change password and go back to main page
+        //changes password and go back to main page
+        //shouldnt have to pass any cookie data
+        header("Location: http://localhost/dashboard.php");
+        exit();
     } else {
         echo "incorrect username or password" . $conn->error;
     }

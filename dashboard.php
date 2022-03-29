@@ -1,5 +1,6 @@
 <?php
-    
+//TODO implement cookies to display coin data
+/*    
 $login = false;
 if ($login) {;
     echo("logged in");
@@ -7,7 +8,7 @@ if ($login) {;
     echo ("not logged in");
     
 }
-
+*/
 ?>
 
 <!DOCTYPE html>
@@ -17,11 +18,10 @@ if ($login) {;
   </head>
   <body>
     <form>
-        you are not logged in
-        <input type="button" onclick="window.location.href='http://localhost/login.php';" value="log in" />
-        <input type="button" onclick="window.location.href='http://localhost/sign_up.php';" value="sign up" />
+
         
-        you are logged in 
+        you are logged in as 
+        <br>
         <input type="button" onclick="window.location.href='http://localhost/change_password.php';" value="change password" />
     </form>
   </body>
