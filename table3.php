@@ -1,7 +1,7 @@
 <?php
      
 //array to pass to table
-$sampleArray = array(
+$passingarray = array(
     0 => "DOG", 
     1 => 123,  
 )
@@ -31,7 +31,7 @@ $sampleArray = array(
     function generate_table() {
 
     //access php array
-    var passedArray = <?php echo json_encode($sampleArray); ?>;
+    var passedArray = <?php echo json_encode($passingarray); ?>;
 
     // get the reference for the body
     var body = document.getElementsByTagName("body")[0];
