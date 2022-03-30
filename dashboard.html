@@ -1,0 +1,112 @@
+<html>
+    <body onload="loadDoc()">
+    </body>
+
+    <style>
+        table, tr, td {
+            border: 1px solid;
+            width: 15%;
+        }
+    </style>
+
+    <script>
+        // Convert string to 2D array of coins, favCoinNames, favCoins, price, loggedIn
+        function processString(str) {
+            const temp =  str.split(":");
+            
+            const coins = temp[0].split(",");
+            const favCoinNames = temp[1].split(",");
+            const favCoins = temp[2].split(",");
+            const price = temp[3].split(",");
+            var loggedIn = temp[4];
+
+            const processed = [coins, favCoinNames, favCoins, price, loggedIn];
+            return processed;
+        }
+
+        function createForm(processed) {
+
+            const coins = processed[0];
+            const favCoinNames = processed[1];
+            const favCoins = processed[2];
+            const price = processed[3];
+            var loggedIn = processed[4];
+
+            var button = document.createElement("button");
+            button.setAttribute("type", "button");
+
+            if (loggedIn == 1) {
+                button.innerHTML = "Sign out";
+                button.onclick = function() {
+                    window.location.href = "sign_out.php";
+                };
+
+                var coinButton = document.createElement("button");
+                button.setAttribute("type", "button");
+
+                coinButton.innerHTML = "Change tracked coins";
+                coinButton.onclick = function() {
+                    window.location.href = "coins.html";
+                };
+
+                document.getElementsByTagName("body")[0].appendChild(coinButton);
+            }
+            else {
+                button.innerHTML = "Log in";
+                button.onclick = function() {
+                    window.location.href = "start.php";
+                };
+            }
+
+            document.getElementsByTagName("body")[0].appendChild(button);
+
+            // Making a table
+            const table = document.createElement("table");
+            const tableBody = document.createElement("tbody");
+
+            table.appendChild(tableBody);
+
+            for (i = 0; i < favCoins.length; i++) {
+                var tr = document.createElement("tr");
+                tableBody.append(tr);
+
+                for (j = 0; j < 3; j++) {
+                    var td = document.createElement("td");
+                    switch (j) {
+                        case 0:
+                            td.appendChild(document.createTextNode(favCoinNames[i]));
+                            break;
+
+                        case 1:
+                            td.appendChild(document.createTextNode(favCoins[i]));
+                            break;
+
+                        case 2:
+                            td.appendChild(document.createTextNode("$" + price[i]));
+                    }
+
+                    tr.appendChild(td);
+                }
+                
+                document.getElementsByTagName("body")[0].appendChild(table);
+            }
+        }
+
+        // Runs on retreival of string using AJAX
+        // String contains: coins, price, favStock
+        function loadDoc() {
+            // Form AJAX request
+            const request = new XMLHttpRequest();
+
+            // Run function after receiving answer
+            request.onload = function() {
+                processed = processString(this.responseText);
+                createForm(processed);
+            }
+
+            request.open("POST", "get_coins.php", true);
+            request.send();
+        }
+
+    </script>
+</html>
