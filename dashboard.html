@@ -1,0 +1,314 @@
+<html>
+    <body onload="loadDoc()">
+
+    </body>
+
+    <style>
+        table, tr, td {
+            border-collapse: collapse;
+            table-layout: fixed;
+            border-radius: 25px;
+            background-image: linear-gradient(-180deg, #030961, #13035a);
+    
+            width: 200px;
+            height: 150px;
+            margin: auto;
+            padding: 25px;
+        
+            text-align: center;
+
+            
+
+        }
+
+    #coinbutton {  
+    background-color: initial;
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0 2px 4px;
+    color: #FFFFFF;
+    cursor: pointer;
+    display: inline-block;
+    font-family: Inter,-apple-system,system-ui,Roboto,"Helvetica Neue",Arial,sans-serif;
+    height: 65px;
+    width: 200px;
+    line-height: 44px;
+    outline: 0;
+    overflow: hidden;
+    padding: 0 20px;
+    pointer-events: auto;
+    position: relative;
+    text-align: center;
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-user-select: none;
+    vertical-align: top;
+    white-space: nowrap;
+    z-index: 9;
+    border: 0;
+    margin-top:100px;
+    margin-left:  1150px;
+    background-image: linear-gradient(-180deg, #120542, #3300ec);
+
+
+
+    }
+
+    #passbutton {
+    background: #00bd68;
+    }
+
+
+
+    #passbutton {
+    background-color: initial;
+    background-image: linear-gradient(-180deg, #00D775, #00BD68);
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0 2px 4px;
+    color: #FFFFFF;
+    cursor: pointer;
+    display: inline-block;
+    font-family: Inter,-apple-system,system-ui,Roboto,"Helvetica Neue",Arial,sans-serif;
+    height: 44px;
+    line-height: 44px;
+    outline: 0;
+    overflow: hidden;
+    padding: 0 20px;
+    pointer-events: auto;
+    position: relative;
+    text-align: center;
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-user-select: none;
+    vertical-align: top;
+    white-space: nowrap;
+    z-index: 9;
+    border: 0;
+
+    line-height: 12px;
+     
+
+     margin-top: 1px;
+     margin-right: 2px;
+     position:absolute;
+     top:7;
+     right:  100;
+    }
+
+
+    #button1:hover {
+  background-color: #282828;
+  background-image: linear-gradient(-180deg, #282828, #f2f2f3);
+}
+    #coinbutton:hover {
+  background-color: #282828;
+  background-image: linear-gradient(-180deg, #0c0c0c, rgb(74, 77, 77));
+
+
+}
+#passbutton:hover {
+    background-color: #282828;
+    background-image: linear-gradient(-180deg, #282828, #f2f2f3);
+
+}
+
+
+
+
+    #button1 {
+    background-color: initial;
+    background-image: linear-gradient(-180deg, #d70000, #bd0019);
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0 2px 4px;
+    color: #FFFFFF;
+    cursor: pointer;
+    display: inline-block;
+    font-family: Inter,-apple-system,system-ui,Roboto,"Helvetica Neue",Arial,sans-serif;
+    height: 44px;
+    /* line-height: 44px; */
+    outline: 0;
+    overflow: hidden;
+    padding: 0 20px;
+    pointer-events: auto;
+    position: relative;
+    text-align: center;
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-user-select: none;
+    vertical-align: top;
+    white-space: nowrap;
+    z-index: 9;
+    border: 0;
+
+    line-height: 12px;
+     
+
+     margin-top: 1px;
+     margin-right: 2px;
+     position:absolute;
+     top:7;
+     right: 6;
+    }
+
+    #button1 {
+    background: #bd0000;
+    }
+
+    .header {
+  padding: 60px;
+  text-align: center;
+  background: #003459;
+  color: white;
+  font-size: 30px;
+  margin-top: 0%;
+  background-image: linear-gradient(-180deg, #010027, #063db4);
+
+}
+
+
+body {
+    background-image: url("cryptopic.jpg");
+background-color: #cccccc;
+height: 500px;
+background-position: center;
+background-repeat: no-repeat;
+background-size: cover;
+position: relative;
+}
+
+
+ 
+    </style>
+<div class="header">
+    <h1>Crypto Tracker</h1>
+    
+  </div>
+
+
+    <script>
+        // Convert string to 2D array of coins, favCoinNames, favCoins, price, loggedIn
+        function processString(str) {
+            const temp =  str.split(":");
+            
+            const coins = temp[0].split(",");
+            const favCoinNames = temp[1].split(",");
+            const favCoins = temp[2].split(",");
+            const price = temp[3].split(",");
+            var loggedIn = temp[4];
+
+            const processed = [coins, favCoinNames, favCoins, price, loggedIn];
+            return processed;
+        }
+
+        function createForm(processed) {
+
+            const coins = processed[0];
+            const favCoinNames = processed[1];
+            const favCoins = processed[2];
+            const price = processed[3];
+            var loggedIn = processed[4];
+
+            var button = document.createElement("button");
+            button.setAttribute("id", "button1");
+
+            if (loggedIn  == 1) {
+                button.innerHTML = "Sign out";
+                button.onclick = function() {
+                    window.location.href = "sign_out.php";
+                };
+
+                var coinButton = document.createElement("button");
+                coinButton.setAttribute("id", "coinbutton");
+
+                coinButton.innerHTML = "Change tracked coins";
+                coinButton.onclick = function() {
+                    window.location.href = "coins.html";
+                };
+
+                var passButton = document.createElement("button");
+                passButton.setAttribute("id", "passbutton");
+
+                passButton.innerHTML = "Change password";
+                passButton.onclick = function() {
+                    window.location.href = "change_password.php";
+                }
+
+                document.getElementsByTagName("body")[0].appendChild(coinButton);
+                document.getElementsByTagName("body")[0].appendChild(passButton);
+            }
+            else {
+                button.innerHTML = "Log in";
+                button.onclick = function() {
+                    window.location.href = "start.php";
+                };
+            }
+
+            document.getElementsByTagName("body")[0].appendChild(button);
+
+            // Making a table
+            if (favCoins.length > 0 && favCoins[0] != "") {
+                const table = document.createElement("table");
+                const tableBody = document.createElement("tbody");
+
+                table.appendChild(tableBody);
+
+                for (i = 0; i < favCoins.length; i++) {
+                    var tr = document.createElement("tr");
+                    tableBody.append(tr);
+
+                    for (j = 0; j < 3; j++) {
+                        var td = document.createElement("td");
+                        switch (j) {
+                            case 0:
+                                td.appendChild(document.createTextNode(favCoinNames[i]));
+                                td.style.fontFamily = "Inter,-apple-system,system-ui,Roboto,Helvetica Neue,Arial,sans-serif"
+                                td.style.fontWeight = "bold"
+                                td.style.color = "white"
+
+                                break; 
+
+                            case 1:
+                                td.appendChild(document.createTextNode(favCoins[i]));
+                                td.style.fontFamily = "Inter,-apple-system,system-ui,Roboto,Helvetica Neue,Arial,sans-serif"
+                                td.style.fontWeight = "bold"
+                                td.style.color = "white"
+
+
+
+                                break;
+
+                            case 2:
+                                td.appendChild(document.createTextNode("$" + price[i]));
+                                td.style.fontFamily = "Inter,-apple-system,system-ui,Roboto,Helvetica Neue,Arial,sans-serif"
+                                td.style.fontWeight = "bold"
+                                td.style.color = "white"
+
+
+
+                        }
+
+                        tr.appendChild(td);
+                    }
+
+                    document.getElementsByTagName("body")[0].appendChild(table);
+                }
+            }
+        }
+
+        // Runs on retreival of string using AJAX
+        // String contains: coins, price, favStock
+        function loadDoc() {
+            // Form AJAX request
+            const request = new XMLHttpRequest();
+
+            // Run function after receiving answer
+            request.onload = function() {
+                processed = processString(this.responseText);
+                createForm(processed);
+            }
+
+            request.open("POST", "get_coins.php", true);
+            request.send();
+        }
+
+    </script>
+</html>
